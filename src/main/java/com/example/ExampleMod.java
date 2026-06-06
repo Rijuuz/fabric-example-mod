@@ -1,24 +1,21 @@
-package com.example;
+package com.backport.mod;
 
 import net.fabricmc.api.ModInitializer;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+public class BackportMod implements ModInitializer {
+    public static final String MOD_ID = "backportmod";
 
-public class ExampleMod implements ModInitializer {
-	public static final String MOD_ID = "modid";
+    // Items Registration (Zelite friendly, crash nahi karega)
+    public static final Item WIND_CHARGE = new WindChargeItem(new Item.Properties().stacksTo(64));
+    public static final Item MACE = new Item(new Item.Properties().durability(500)); 
 
-	// This logger is used to write text to the console and the log file.
-	// It is considered best practice to use your mod id as the logger's name.
-	// That way, it's clear which mod wrote info, warnings, and errors.
-	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-
-	@Override
-	public void onInitialize() {
-		// This code runs as soon as Minecraft is in a mod-load-ready state.
-		// However, some things (like resources) may still be uninitialized.
-		// Proceed with mild caution.
-
-		LOGGER.info("Hello Fabric world!");
-	}
+    @Override
+    public void onInitialize() {
+        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(MOD_ID, "wind_charge"), WIND_CHARGE);
+        Registry.register(BuiltInRegistries.ITEM, new ResourceLocation(MOD_ID, "mace"), MACE);
+    }
 }
